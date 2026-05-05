@@ -1,4 +1,3 @@
-// plugins/main-control.js
 const PERM = { ADMIN: 'admin', OWNER: 'owner', sam: 'sam' };
 
 const featureRegistry = [
@@ -22,7 +21,7 @@ const featureRegistry = [
   { key: 'antinuke', store: 'chat', perm: PERM.ADMIN, name: '*🛡️ Antinuke*', desc: 'Protezione anti-raid' },
   { key: 'welcome', store: 'chat', perm: PERM.ADMIN, name: '*👋 Welcome*', desc: 'Messaggio benvenuto' },
   { key: 'goodbye', store: 'chat', perm: PERM.ADMIN, name: '*🚪 Addio*', desc: 'Messaggio addio' },
-  { key: 'ai', store: 'chat', perm: PERM.ADMIN, name: '*🧠 Bot IA*', desc: 'Intelligenza Artificiale attiva' },
+  { key: 'ai', store: 'chat', perm: PERM.ADMIN, name: '*🧠 Bot IA*', desc: 'Abilita il comando .bot' },
   { key: 'autoread', store: 'bot', perm: PERM.OWNER, name: '*👀 Lettura*', desc: 'Auto-visualizzazione' },
   { key: 'registrazioni', store: 'bot', perm: PERM.OWNER, name: '*📛 Registrazione*', desc: 'Obbligo registrazione' }
 ];
@@ -32,6 +31,7 @@ featureRegistry.forEach(f => aliasMap.set(f.key.toLowerCase(), f));
 
 let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isSam }) => {
   const isEnable = ['enable', 'attiva', 'on', '1'].includes(command?.toLowerCase());
+  
   global.db.data.chats = global.db.data.chats || {};
   global.db.data.settings = global.db.data.settings || {};
   const chat = global.db.data.chats[m.chat] || (global.db.data.chats[m.chat] = {});
