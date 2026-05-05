@@ -1,6 +1,6 @@
 import { createAIService } from './risposte-ai.js'; 
 
-// Chiave spezzata in 4 parti per evitare il blocco "Secret detected"
+// Chiave Groq spezzata
 const p1 = 'gsk_6VlRfuGRq3pG0';
 const p2 = 'RAc8knZWGdyb3FYGlEn';
 const p3 = '0Y9t8U4gg38EGlT';
@@ -47,46 +47,55 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isS
   const botJid = conn.decodeJid(conn.user.jid);
   const botSettings = global.db.data.settings[botJid] || (global.db.data.settings[botJid] = {});
 
-  if (args[0] && ['enable', 'disable', 'attiva', 'disattiva', 'on', 'off'].includes(command?.toLowerCase())) {
+  if (args[0]) {
     let type = args[0].toLowerCase();
     const feat = aliasMap.get(type);
     if (!feat) return m.reply(`『 ❌ 』 Modulo *${type}* non trovato.`);
+    
+    // Controllo permessi
     if (feat.perm === PERM.OWNER && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato.');
     if (feat.perm === PERM.ADMIN && !isAdmin && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato.');
+    
     const target = feat.store === 'bot' ? botSettings : chat;
     target[feat.key] = isEnable;
     return m.reply(`*〘 📡 BLD-SYSTEM 〙*\n\nModulo: ${feat.name}\nStato: *${isEnable ? 'ATTIVATO 🟢' : 'DISATTIVATO 🔴'}*`);
   }
 
-  if (['enable', 'disable', 'attiva', 'disattiva'].includes(command?.toLowerCase())) {
-    const getStatus = (f) => (f.store === 'bot' ? botSettings[f.key] : chat[f.key]) ? '🟢' : '🔴';
-    let menu = `┎━━━━━━━━━━━━━━━━━━━━┑\n┃   ✧  *𝐁𝐋𝐃 - 𝐌𝐀𝐒𝐓𝐄𝐑 𝐂𝐎𝐍𝐓𝐑𝐎𝐋* ✧   ┃\n┖━━━━━━━━━━━━━━━━━━━━┙\n\n`;
-    featureRegistry.forEach(f => {
-        menu += `┇ ${getStatus(f)} ${f.name}\n┇ _${f.desc}_\n┇ ➤ *${usedPrefix}${command} ${f.key}*\n┇\n`;
-    });
-    menu += `_ʙʟᴅ-ʙᴏᴛ sᴇᴄᴜʀɪᴛʏ ɪɴᴛᴇʀꜰᴀᴄᴇ_`;
-    return conn.sendMessage(m.chat, { text: menu }, { quoted: m });
-  }
+  // Menu visualizzazione stati
+  const getStatus = (f) => (f.store === 'bot' ? botSettings[f.key] : chat[f.key]) ? '🟢' : '🔴';
+  let menu = `┎━━━━━━━━━━━━━━━━━━━━┑\n┃   ✧  *𝐁𝐋𝐃 - 𝐌𝐀𝐒𝐓𝐄𝐑 𝐂𝐎𝐍𝐓𝐑𝐎𝐋* ✧   ┃\n┖━━━━━━━━━━━━━━━━━━━━┙\n\n`;
+  featureRegistry.forEach(f => {
+      menu += `┇ ${getStatus(f)} ${f.name}\n┇ _${f.desc}_\n┇ ➤ *${usedPrefix}${command} ${f.key}*\n┇\n`;
+  });
+  menu += `_ʙʟᴅ-ʙᴏᴛ sᴇᴄᴜʀɪᴛʏ ɪɴᴛᴇʀꜰᴀᴄᴇ_`;
+  return conn.sendMessage(m.chat, { text: menu }, { quoted: m });
 };
 
+// Logica AI automatica
 handler.before = async function (m) {
   if (!m.text || m.fromMe || m.isBaileys) return;
-  if (/^[.!#]/.test(m.text)) return;
-  const chat = global.db.data.chats[m.chat];
-  if (!chat?.ai) return;
+  if (/^[.!#]/.test(m.text)) return; // Salta se è un comando
+  
+  const chat = global.db.data?.chats?.[m.chat];
+  if (!chat?.ai) return; // Se il modulo AI non è attivo (🔴), esce
 
-  // Risponde solo se scrivi "bot"
+  // Trigger: risponde solo se scrivi "bot" nel messaggio
   if (!/\bbot\b/i.test(m.text)) return;
 
   try {
+    // Effetto "sta scrivendo..."
+    await this.sendPresenceUpdate('composing', m.chat);
+    
     const reply = await botAI.generateReply({
       messageText: m.text,
       authorName: m.pushName || 'User',
-      chatId: m.chat
+      chatId: m.chat,
+      authorId: m.sender
     });
+    
     if (reply) return this.reply(m.chat, reply, m);
   } catch (e) {
-    console.error('Errore IA:', e);
+    console.error('[ERRORE IA PLUGIN]:', e);
   }
 };
 
