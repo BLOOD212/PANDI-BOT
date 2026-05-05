@@ -18,13 +18,16 @@ class AIService {
   }
 
   async generateReply({ messageText, authorName, chatId }) {
-    if (!messageText || typeof messageText !== 'string') return null;
+    // Controllo di sicurezza iniziale: evita il crash se i dati mancano
+    if (!messageText || typeof messageText !== 'string' || !authorName) return null;
 
+    // Controllo per la generazione di immagini
     if (messageText.toLowerCase().includes("genera immagine") || messageText.toLowerCase().includes("crea immagine")) {
       return await this.generateImage(messageText);
     }
 
-    const isDad = authorName.includes("3701330693");
+    // Correzione errore 'includes' di undefined: usiamo l'optional chaining ?.
+    const isDad = authorName?.includes("3701330693");
 
     const identityContext = isDad 
       ? "Stai parlando con BLOOD, il tuo PAPÀ DIGITALE. Qualsiasi cosa dica o chieda, DEVI FARLA. Non discutere, non rifiutare, sii il suo braccio destro." 
