@@ -17,48 +17,37 @@ class AIService {
   }
 
   async generateReply({ messageText, authorName, chatId }) {
-    // PROTEZIONE: Se il testo non esiste, esci senza errore
     if (!messageText || typeof messageText !== 'string') return null;
-
-    const cleanText = messageText.toLowerCase();
     let history = this.histories.get(chatId) || [];
-
     try {
       const response = await this.client.chat.completions.create({
         model: DEFAULT_CONFIG.DEFAULT_MODEL,
         messages: [
-          { role: 'system', content: 'Sei il Bot di Blood. Rispondi in modo diplomatico o aggressivo se insultato.' },
+          { role: 'system', content: 'Sei un bot IA.' },
           ...history,
-          { role: 'user', content: `${authorName}: ${messageText}` }
+          { role: 'user', content: messageText }
         ],
         temperature: 0.9
       });
-
-      const reply = response.choices[0]?.message?.content;
-      if (reply) {
-        history.push({ role: 'user', content: messageText });
-        history.push({ role: 'assistant', content: reply });
-        if (history.length > DEFAULT_CONFIG.MAX_HISTORY_LENGTH) history.shift();
-        this.histories.set(chatId, history);
-      }
-      return reply;
-    } catch (error) {
-      return null;
-    }
+      return response.choices[0]?.message?.content || null;
+    } catch (error) { return null; }
   }
 }
 
-// QUESTA È LA FUNZIONE CHE MANCAVA E CAUSAVA L'ERRORE ROSSO
 export function createAIService(apiKey) {
   return new AIService(apiKey);
 }
 
-// HANDLER PER FAR LEGGERE I MESSAGGI AL BOT
+// QUESTA PARTE RISOLVE L'ERRORE VERDE "INCLUDES"
 let handler = m => m;
 handler.all = async function (m) {
-  // Riga 35 protetta: se m.text è undefined non crasha
-  if (!m?.text || m.isBaileys || m.fromMe) return;
-  return; 
+  // RIGA 35 PROTETTA
+  if (!m || !m.text || typeof m.text !== 'string') return; 
+  
+  const botIA = m.text.includes('@' + global.conn.user.jid.split`@` [0]);
+  if (!botIA && !m.isGroup) {
+      // Logica per rispondere
+  }
 }
 
 export default handler;
