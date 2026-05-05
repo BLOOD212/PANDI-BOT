@@ -1,5 +1,3 @@
-// Plugin Anti-Gore by github.com/axion-bot/axion-bot-Md
-
 import { downloadContentFromMessage } from '@realvare/baileys'
 import crypto from 'crypto'
 import fetch from 'node-fetch'
@@ -72,10 +70,7 @@ handler.before = async function (m, { conn, isAdmin, isOwner, isBotAdmin, isROwn
     }
 
     const SIGHTENGINE_USER = global.APIKeys.sightengine_user
-const SIGHTENGINE_SECRET = global.APIKeys.sightengine_secret
-
-console.log('Sightengine user:', SIGHTENGINE_USER)
-console.log('Sightengine secret:', SIGHTENGINE_SECRET ? 'OK' : 'MANCANTE')
+    const SIGHTENGINE_SECRET = global.APIKeys.sightengine_secret
 
     if (!SIGHTENGINE_USER || !SIGHTENGINE_SECRET) return true
 
@@ -96,24 +91,12 @@ console.log('Sightengine secret:', SIGHTENGINE_SECRET ? 'OK' : 'MANCANTE')
 
     const result = await response.json()
 
-    if (result.status !== 'success') {
-      console.log('Errore API SightEngine antigore:', result)
-      return true
-    }
+    if (result.status !== 'success') return true
 
-    let goreProb = 0
-    let violenceProb = 0
-    let seriousInjury = 0
-    let veryBloody = 0
-    let corpse = 0
-    let skull = 0
-    let bodyOrgan = 0
-    let firearmThreat = 0
-    let physicalViolence = 0
+    let goreProb = 0, violenceProb = 0, seriousInjury = 0, veryBloody = 0, corpse = 0, skull = 0, bodyOrgan = 0, firearmThreat = 0, physicalViolence = 0
 
     if (type === 'video') {
       const frames = result.data?.frames || []
-
       goreProb = Math.max(...frames.map(f => f.gore?.prob || 0), 0)
       violenceProb = Math.max(...frames.map(f => f.violence?.prob || 0), 0)
       seriousInjury = Math.max(...frames.map(f => f.gore?.classes?.serious_injury || 0), 0)
@@ -136,15 +119,7 @@ console.log('Sightengine secret:', SIGHTENGINE_SECRET ? 'OK' : 'MANCANTE')
     }
 
     const isHighRisk =
-      goreProb > 0.45 ||
-      violenceProb > 0.75 ||
-      seriousInjury > 0.35 ||
-      veryBloody > 0.35 ||
-      corpse > 0.25 ||
-      skull > 0.30 ||
-      bodyOrgan > 0.20 ||
-      firearmThreat > 0.85 ||
-      physicalViolence > 0.85
+      goreProb > 0.45 || violenceProb > 0.75 || seriousInjury > 0.35 || veryBloody > 0.35 || corpse > 0.25 || skull > 0.30 || bodyOrgan > 0.20 || firearmThreat > 0.85 || physicalViolence > 0.85
 
     global.db.data.goreCache[fileHash] = isHighRisk
 
@@ -155,61 +130,33 @@ console.log('Sightengine secret:', SIGHTENGINE_SECRET ? 'OK' : 'MANCANTE')
     console.error('Errore antigore:', e)
     return true
   }
-
   return true
 }
 
 async function punishUser(conn, m, user, isBotAdmin, reason) {
   user.warn += 1
   const senderTag = m.sender.split('@')[0]
-
-  try {
-    await conn.sendMessage(m.chat, { delete: m.key })
-  } catch {}
+  try { await conn.sendMessage(m.chat, { delete: m.key }) } catch {}
 
   if (user.warn < 3) {
     await conn.sendMessage(m.chat, {
-      text: `╭━━━━━━━🚫━━━━━━━╮
-*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*
-╰━━━━━━━🚫━━━━━━━╯
-
-*@${senderTag}*
-*⚠️ ${reason}*
-*📌 𝐀𝐯𝐯𝐢𝐬𝐨:* *${user.warn}/3*
-`,
+      text: `╭━━━━━━━🚫━━━━━━━╮\n*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*\n╰━━━━━━━🚫━━━━━━━╯\n\n*@${senderTag}*\n*⚠️ ${reason}*\n*📌 𝐀𝐯𝐯𝐢𝐬𝐨:* *${user.warn}/3*`,
       mentions: [m.sender]
     }, { quoted: m })
-
     return false
   }
 
   user.warn = 0
-
   if (!isBotAdmin) {
     await conn.sendMessage(m.chat, {
-      text: `╭━━━━━━━🚫━━━━━━━╮
-*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*
-╰━━━━━━━🚫━━━━━━━╯
-
-*@${senderTag}*
-*⚠️ 𝐇𝐚 𝐫𝐚𝐠𝐠𝐢𝐮𝐧𝐭𝐨 𝟑/𝟑 𝐚𝐯𝐯𝐢𝐬𝐢*
-*❌ 𝐍𝐨𝐧 𝐩𝐨𝐬𝐬𝐨 𝐫𝐢𝐦𝐮𝐨𝐯𝐞𝐫𝐥𝐨: 𝐢𝐥 𝐛𝐨𝐭 𝐧𝐨𝐧 è 𝐚𝐝𝐦𝐢𝐧*
-`,
+      text: `╭━━━━━━━🚫━━━━━━━╮\n*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*\n╰━━━━━━━🚫━━━━━━━╯\n\n*@${senderTag}*\n*⚠️ 𝐇𝐚 𝐫𝐚𝐠𝐠𝐢𝐮𝐧𝐭𝐨 𝟑/𝟑 𝐚𝐯𝐯𝐢𝐬𝐢*\n*❌ 𝐍𝐨𝐧 𝐩𝐨𝐬𝐬𝐨 𝐫𝐢𝐦𝐮𝐨𝐯𝐞𝐫𝐥𝐨: 𝐢𝐥 𝐛𝐨𝐭 𝐧𝐨𝐧 è 𝐚𝐝𝐦𝐢𝐧*`,
       mentions: [m.sender]
     }, { quoted: m })
-
     return false
   }
 
   await conn.sendMessage(m.chat, {
-    text: `╭━━━━━━━🚫━━━━━━━╮
-*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*
-╰━━━━━━━🚫━━━━━━━╯
-
-*@${senderTag}*
-*🚷 𝐑𝐢𝐦𝐨𝐬𝐬𝐨 𝐝𝐚𝐥 𝐠𝐫𝐮𝐩𝐩𝐨*
-*📌 𝐌𝐨𝐭𝐢𝐯𝐨:* *𝐂𝐨𝐧𝐭𝐞𝐧𝐮𝐭𝐢 𝐠𝐫𝐚𝐟𝐢𝐜𝐢 / 𝐯𝐢𝐨𝐥𝐞𝐧𝐭𝐢*
-`,
+    text: `╭━━━━━━━🚫━━━━━━━╮\n*✦ 𝐀𝐍𝐓𝐈 𝐆𝐎𝐑𝐄 ✦*\n╰━━━━━━━🚫━━━━━━━╯\n\n*@${senderTag}*\n*🚷 𝐑𝐢𝐦𝐨𝐬𝐬𝐨 𝐝𝐚𝐥 𝐠𝐫𝐮𝐩𝐩𝐨*\n*📌 𝐌𝐨𝐭𝐢𝐯𝐨:* *𝐂𝐨𝐧𝐭𝐞𝐧𝐮𝐭𝐢 𝐠𝐫𝐚𝐟𝐢𝐜𝐢 / 𝐯𝐢𝐨𝐥𝐞𝐧𝐭𝐢*`,
     mentions: [m.sender]
   }, { quoted: m })
 
