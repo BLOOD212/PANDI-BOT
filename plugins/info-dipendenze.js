@@ -1,4 +1,4 @@
-// crediti https://github.com/axion-bot/axion-bot-Md
+
 
 import fs from 'fs'
 import path from 'path'
