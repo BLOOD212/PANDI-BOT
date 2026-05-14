@@ -180,7 +180,7 @@ if (global.conn && global.conn.ws) {
                         console.log(`[📞] chiamata di ${numero} - ${nome} rifiutata`)
                         if (user.callCount >= 3) {
                             user.banned = true
-                            user.bannedReason = 'Troppi tentativi di chiamata'
+                            user.bannedReason = 'Troppi tentativi di chiamata mongoloide tagliati'
                             const msg = `🚫 Quanto puoi essere sfigato per spammare di call smh.`
                             await global.conn.sendMessage(toJid(callerId), { text: msg })
                         } else {
