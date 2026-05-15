@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fredoka+One&size=50&pause=1000&color=4A2C11&center=true&vCenter=true&width=700&height=120&lines=🍪+𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄-𝐁𝐎𝐓+🍪;UN+DOLCE+STRIP_DI+CODICE;DEVELOPED+BY+PASTERY" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fredoka+One&size=50&pause=1000&color=4A2C11&center=true&vCenter=true&width=700&height=120&lines=🍪+𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄-𝐁𝐎𝐓+🍪;UN+DOLCE+STRIP_DI+CODICE;DEVELOPED+BY+BLOOD" alt="Typing SVG" />
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=25&pause=800&color=FFD700&center=true&vCenter=true&width=600&height=60&lines=STATUS:+SFORNATO+✨;SYSTEM:+CRUNCHY+🍪;OWNER:+PASTERY" alt="Status SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=25&pause=800&color=FFD700&center=true&vCenter=true&width=600&height=60&lines=STATUS:+SFORNATO+✨;SYSTEM:+CRUNCHY+🍪;OWNER:+BLOOD" alt="Status SVG" />
 </p>
 
 ---
@@ -27,4 +27,3 @@
 * **Impasto Node.js:** Lievitazione rapida dei processi con esecuzione asincrona e zero lag.
 * **Stelline di Glassa (UI):** Risposte eleganti, formattate alla perfezione e piacevoli da leggere.
 * **Modalità Golosa:** Gestione intelligente dei media e automazione progettata per non appesantire la memoria.
-* 
