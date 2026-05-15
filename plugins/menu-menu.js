@@ -2,56 +2,55 @@ import { promises as fs } from 'fs'
 import { join } from 'path'
 
 const emojicategoria = {
-  info: 'ℹ️',
-  main: '💠',
-  sicurezza: '🛡️'
+  info: '✨',
+  main: '🍪',
+  sicurezza: '🌟'
 }
 
 let tags = {
-  main: '╭ *`SYSTEM MAIN`* ╯',
-  sicurezza: '╭ *`SECURITY SYSTEM`* ╯',
-  info: '╭ *`DATABASE INFO`* ╯'
+  main: '🌟 `RICETTE PRINCIPALI` 🌟',
+  sicurezza: '🌾 `PROTEZIONE FORNO` 🌾',
+  info: '📜 `REGISTRO PASTICCERIA` 📜'
 }
 
-// CAMBIATO: "before" diventa "testoInizio", "after" diventa "testoFine"
+// ESTETICA TOTALMENTE RIVOLUZIONATA: PANDISTELLE STYLE 🍪✨
 const defaultMenu = {
   testoInizio: `
-┏━━━━━━━━━━━━━━━━━━━━┓
-   💠  *B L D  -  B O T* 💠
-┗━━━━━━━━━━━━━━━━━━━━┛
- ┌───────────────────
- │ 👤 *User:* %name
- │ 🕒 *Uptime:* %uptime
- │ 👥 *Total Users:* %totalreg
- └───────────────────
- 
- *PANNELLO DI CONTROLLO:*
+╭━━━━━━━ ✨ 🌟 ✨ ━━━━━━━╮
+      🍪  𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐁𝐎𝐓  🍪
+╰━━━━━━━ ✨ 🌟 ✨ ━━━━━━━╯
+
+╔═════════════════════════╗
+  🌾 » 𝐂𝐮𝐨𝐜𝐨: %name
+  ⏰ » 𝐋𝐢𝐞𝐯𝐢𝐭𝐚𝐳𝐢𝐨𝐧𝐞: %uptime
+  🍪 » 𝐁𝐢𝐬𝐜𝐨𝐭𝐭𝐢 𝐒𝐟𝐨𝐫𝐧𝐚𝐭𝐢: %totalreg
+╚═════════════════════════╝
+
+✨ *𝐈𝐋 𝐓𝐔𝐎 𝐑𝐈𝐂𝐄𝐓𝐓𝐀𝐑𝐈𝐎:*
 `.trimStart(),
 
-  header: '      ⋆｡˚『 %category 』˚｡⋆\n╭',
-  body: '*│ ➢* 『%emoji』 %cmd',
-  footer: '*╰━━━━━━━──────━━━━━━━*\n',
-  testoFine: `_Powered by BLD-BOT Interface_`,
+  header: '╭───  %category  ───🧱\n│',
+  body: '├ ⭐  『%emoji』 %cmd',
+  footer: '╰───────────────────────── 🍪\n',
+  testoFine: `_✨ Cotto al punto giusto da BLOOD ✨_`,
 }
 
-const localImg = './menu-principale.jpeg'
-
 const bldButtons = [
-  { title: "🛡️ SICUREZZA", command: "attiva" },
-  { title: "🎮 GIOCHI", command: "menugiochi" },
-  { title: "🤖 IA", command: "menuia" },
-  { title: "👥 GRUPPO", command: "menugruppo" },
-  { title: "📥 DOWNLOAD", command: "menudownload" },
-  { title: "🛠️ STRUMENTI", command: "menustrumenti" },
-  { title: "⭐ PREMIUM", command: "menupremium" },
-  { title: "💰 EURO", command: "menueuro" }
+  { title: "🌾 PROTEZIONE", command: "attiva" },
+  { title: "🎮 DIVERTIMENTO", command: "menugiochi" },
+  { title: "🧠 ZUCCHERO IA", command: "menuia" },
+  { title: "🧺 SACCO GRUPPO", command: "menugruppo" },
+  { title: "📥 PRELEVA MEDIA", command: "menudownload" },
+  { title: "🛠️ UTENSILI", command: "menustrumenti" },
+  { title: "⭐ INGREDIENTI PRO", command: "menupremium" },
+  { title: "💰 SALDOPREZZO", command: "menueuro" }
 ]
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
 
-    let name = await conn.getName(m.sender) || 'User'
+    let name = await conn.getName(m.sender) || 'Ospite'
     let uptime = clockString(process.uptime() * 1000)
     let totalreg = Object.keys(global.db.data.users).length
 
@@ -63,7 +62,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     let menuTags = Object.keys(tags)
 
-    // CAMBIATO: uso testoInizio e testoFine qui sotto
     let _text = [
       defaultMenu.testoInizio,
       ...menuTags.map(tag => {
@@ -91,27 +89,19 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       type: 1
     }))
 
-    let imageBuffer = null
-    try {
-      imageBuffer = await fs.readFile(localImg)
-    } catch (e) {
-      console.log("⚠️ Immagine NON trovata")
-    }
-
     await conn.sendMessage(m.chat, {
-      ...(imageBuffer ? { image: imageBuffer } : {}),
-      caption: text.trim(),
-      footer: "B L D - B O T  S Y S T E M",
+      text: text.trim(),
+      footer: "🍪 P A N D I S T E L L E  -  S Y S T E M",
       buttons: buttons,
-      headerType: 4,
+      headerType: 1,
       viewOnce: true
     }, { quoted: m })
 
-    await m.react('💠')
+    await m.react('🍪')
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, `❌ Errore BLD-SYS: ${e.message}`, m)
+    conn.reply(m.chat, `❌ Errore nell'impasto: ${e.message}`, m)
   }
 }
 
