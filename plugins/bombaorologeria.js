@@ -37,7 +37,7 @@ let handler = async (m, { conn, text, command }) => {
         startCaption += `│ 『 📝 』 \`Scrivi:\` *passa @utente* o rispondi a qualcuno con *passa*\n`;
         startCaption += `*╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*`;
 
-        return conn.sendMessage(chat, { text: startCaption, mentions: [m.sender], footer: '𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙' }, { quoted: m });
+        return conn.sendMessage(chat, { text: startCaption, mentions: [m.sender], footer: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭' }, { quoted: m });
     }
 };
 
@@ -123,7 +123,7 @@ async function esplosione(chatId, conn, m) {
     await conn.sendMessage(chatId, { 
         text: finale, 
         mentions: [b.vittima, ...b.passaggi],
-        footer: '𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙',
+        footer: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
         interactiveButtons: playAgainButtons()
     });
 
