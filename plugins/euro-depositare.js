@@ -248,7 +248,7 @@ const renderDepositHTML = (props) => {
             <div class="footer-timestamp">${props.timestamp}</div>
         </div>
         
-        <div class="watermark">✧˚🩸 varebot 🕊️˚✧</div>
+        <div class="watermark">✧˚𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭˚✧</div>
     </div>
 </body>
 </html>`;
@@ -398,7 +398,7 @@ let handler = async (m, { args, conn }) => {
         await conn.sendMessage(m.chat, { 
             image: mediaBuffer, 
             caption: successMessage, 
-            footer: '✧BloodBot✧', 
+            footer: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭', 
             buttons: buttons, 
             headerType: 4 
         }, { quoted: m });
@@ -408,7 +408,7 @@ let handler = async (m, { args, conn }) => {
         console.error("Errore nella creazione dell'immagine:", error);
         await conn.sendMessage(m.chat, { 
             text: successMessage, 
-            footer: '✧BloodBot✧', 
+            footer: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭', 
             buttons: buttons, 
             headerType: 1 
         }, { quoted: m });
