@@ -74,7 +74,7 @@ handler.before = async function (m, { conn, participants, isBotAdmin }) {
   const text = `
   ⋆｡˚『 ╭ \`ANTINUKE ATTIVO\` ╯ 』˚｡⋆
 ╭
-┃ 🚨 \`Stato:\` *Blood ha messo il preservativo*
+┃ 🚨 \`Stato:\` *𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭 ha chiuso il pacco*
 ┃
 ┃ 『 👤 』 \`Autore:\` @${sender.split('@')[0]}
 ┃ 『 🚫 』 \`Azione:\` *${action}* NON autorizzata
@@ -91,10 +91,10 @@ handler.before = async function (m, { conn, participants, isBotAdmin }) {
     contextInfo: {
       mentionedJid: [sender, ...usersToDemote, ...BOT_OWNERS].filter(Boolean),
       externalAdReply: {
-        title: 'SISTEMA DI SICUREZZA OWNER',
+        title: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
         body: 'Protezione Proprietari Attiva',
         thumbnailUrl: 'https://qu.ax/TfUj.jpg',
-        sourceUrl: 'BLOODANTINUKE',
+        sourceUrl: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
         mediaType: 1,
         renderLargerThumbnail: true
       }
