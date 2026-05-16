@@ -77,7 +77,7 @@ handler.before = async function (m, { conn, isAdmin, isBotAdmin, isOwner, isSam 
 
                 const text = `${header}
 ╭
-┃ 🛡️ \`Stato:\` *Protocollo Blood Attivo*
+┃ 🛡️ \`Stato:\` *Protocollo Attivo*
 ┃
 ┃ 『 👤 』 \`Target:\` @${decodedSender.split('@')[0]}
 ┃ 『 ⚡ 』 \`Rilevato:\` *${typeSanz}*
@@ -92,7 +92,7 @@ handler.before = async function (m, { conn, isAdmin, isBotAdmin, isOwner, isSam 
                     mentions: [decodedSender],
                     contextInfo: {
                         externalAdReply: {
-                            title: 'BLOOD ANTI-FLOOD',
+                            title: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
                             body: 'Minaccia spam neutralizzata',
                             thumbnailUrl: 'https://qu.ax/TfUj.jpg',
                             mediaType: 1
