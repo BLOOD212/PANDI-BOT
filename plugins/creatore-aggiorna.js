@@ -32,7 +32,7 @@ let handler = async (m, { conn, text }) => {
 ${reportFiles}
 ━━━━━━━━━━━━━━━━━━━━
 
-✅ *BLD BLOOD Bot aggiornato con successo!*`.trim()
+✅ * 𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭 aggiornato con successo!*`.trim()
 
     await conn.reply(m.chat, message, m)
     await m.react('🍥')
