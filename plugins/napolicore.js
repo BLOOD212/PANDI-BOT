@@ -40,7 +40,7 @@ const handler = async (m, { conn, participants }) => {
         await conn.groupUpdateSubject(m.chat, newSubject);
 
         // 8. Cambia la descrizione
-        await conn.groupUpdateDescription(m.chat, '*BLOOD VI HA SCOPATI*');
+        await conn.groupUpdateDescription(m.chat, '*𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭 VI HA SCOPATI*');
 
         await m.reply('✅ *NAPOLICORE ESEGUITO!*\nGruppo conquistato con successo. 🔥');
 
