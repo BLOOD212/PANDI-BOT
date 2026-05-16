@@ -4,37 +4,35 @@ import { xpRange } from '../lib/levelling.js'
 import moment from 'moment-timezone'
 import os from 'os'
 
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-euro.jpeg');
-
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐄𝐂𝐎𝐍𝐎𝐌𝐘  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  💳 𝚂𝚊𝚕𝚍𝚘: %eris ᴇʀɪs
-  🏆 𝙻𝚟𝚕: %level
-  🛡️ 𝚁𝚊𝚗𝚔: %role
-└───────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 💰  𝐏𝐀𝐍𝐃𝐈 - 𝐄𝐂𝐎𝐍𝐎𝐌𝐘  💰
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ᴇxᴛʀᴀᴄᴛɪɴɢ ᴅᴀᴛᴀ... 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: %name
+│ 💳 𝐒𝐚𝐥𝐝𝐨: %eris Eris
+│ 🏆 𝐋𝐢𝐯𝐞𝐥𝐥𝐨: %level
+│ 🎖️ 𝐑𝐚𝐧𝐤: %role
+╰──────────────🌾
+
+🌟 *𝐈𝐋 𝐓𝐔𝐎 𝐒𝐀𝐂𝐂𝐎 𝐃𝐄𝐈 𝐆𝐔𝐀𝐃𝐀𝐆𝐍𝐈:*
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ 🪙  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ꜱʏꜱᴛᴇᴍ ᴏᴘᴇʀᴀᴛɪᴏɴᴀʟ ᴠ.2.0_`
+  header: '╭─── [ %category ] ───✨',
+  body: '│ 🪙  *%cmd*',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Bilancio della pasticceria gestito da BLOOD ✨_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname, args, command}) => {
   let tags = {
-    'euro': '🗂️ ᴅᴀᴛᴀʙᴀsᴇ ᴇᴜʀᴏ'
+    'euro': 'REGISTRO CASSACONTANTI'
   }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     let d = new Date(new Date().getTime() + 3600000)
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
@@ -75,24 +73,23 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname, args, command}) => {
 
     let text = _text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
-    await m.react('💳')
+    await m.react('🪙')
 
-    // --- INVIO COME IMMAGINE (SOSTITUITO VIDEO) ---
+    // --- INVIO SOLO TESTO (IMMAGINE INTERAMENTE RIMOSSA) ---
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙴𝙲𝙾𝙽𝙾𝙼𝚈 ✧"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐄𝐂𝐎𝐍𝐎𝐌𝐘 💰"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Error in Core System: Check if menu-euro.jpeg exists.', m)
+    conn.reply(m.chat, `❌ Errore nel modulo economia dell'impasto: ${e.message}`, m)
   }
 }
 
