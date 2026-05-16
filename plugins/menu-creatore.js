@@ -6,31 +6,32 @@ import { join } from 'path'
 
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐂𝐑𝐄𝐀𝐓𝐎𝐑  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝙾𝚠𝚗𝚎𝚛: %name
-  ⚙️ 𝙼𝚘𝚍𝚎: %mode
-  🖥️ 𝙿𝚕𝚊𝚝𝚏𝚘𝚛𝚖: %platform
-└───────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 👑  𝐏𝐀𝐍𝐃𝐈 - 𝐂𝐑𝐄𝐀𝐓𝐎𝐑  👑
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ᴀᴄᴄᴇssɪɴɢ ʀᴏᴏᴛ ᴘʀᴏᴛᴏᴄᴏʟ... 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐅𝐨𝐧𝐝𝐚𝐭𝐨𝐫𝐞: %name
+│ ⚙️ 𝐌𝐨𝐝𝐚𝐥𝐢𝐭𝐚̀: %mode
+│ 🖥️ 𝐏𝐢𝐚𝐭𝐭𝐚𝐟𝐨𝐫𝐦𝐚: %platform
+╰──────────────🌾
+
+🌟 *𝐈𝐋 𝐒𝐀𝐂𝐂𝐎 𝐒𝐄𝐆𝐑𝐄𝐓𝐎 𝐃𝐄𝐋 𝐅𝐎𝐍𝐃𝐀𝐓𝐎𝐑𝐄:*
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ 👨‍💻  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ʙʟᴅ-ʙᴏᴛ ᴀᴅᴍɪɴ ɪɴᴛᴇʀꜰᴀᴄᴇ_`
+  header: '╭─── [ %category ] ───✨',
+  body: '│  👨‍💻  *%cmd*',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Pannello di controllo assoluto sfornato da BLOOD ✨_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   let tags = {
-    'creatore': 'ꜱʏꜱᴛᴇᴍ ᴏᴠᴇʀʀɪᴅᴇ'
+    'creatore': 'GESTIONE CENTRALIZZATA'
   }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     let name = await conn.getName(m.sender)
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
@@ -68,23 +69,23 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     let text = _text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join('|')})`, 'g'), (_, name) => '' + replace[name])
 
-    await m.react('👨‍💻')
+    await m.react('👑')
 
-    // --- INVIO SOLO TESTO (RIMOSSO VIDEO/IMMAGINE) ---
+    // --- INVIO SOLO TESTO (IMMAGINE/VIDEO CONFERMATI ASSENTI) ---
     await conn.sendMessage(m.chat, {
       text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙲𝚁𝙴𝙰𝚃𝙾𝚁 ✧"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐂𝐑𝐄𝐀𝐓𝐎𝐑 👑"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Error in Creator Module.', m)
+    conn.reply(m.chat, `❌ Errore nel modulo creatore dell'impasto: ${e.message}`, m)
   }
 }
 
