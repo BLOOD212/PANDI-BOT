@@ -143,7 +143,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
     try {
         let msg = await conn.sendMessage(m.chat, {
             image: { url: scelta.url },
-            caption: `${frase}\n\n🌍 *Paese:* ${scelta.paese}\n\n🏛️ *Rispondi con il nome della capitale!*\n⏱️ *Tempo disponibile:* 30 secondi\n\n> \`𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙\``,
+            caption: `${frase}\n\n🌍 *Paese:* ${scelta.paese}\n\n🏛️ *Rispondi con il nome della capitale!*\n⏱️ *Tempo disponibile:* 30 secondi\n\n> \`𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭\``,
             quoted: m
         });
         global.capitaliGame = global.capitaliGame || {};
