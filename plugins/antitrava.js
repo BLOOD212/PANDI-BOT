@@ -47,7 +47,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isSam }) {
 
         const textMsg = `${header}
 ╭
-┃ 🛡️ \`Stato:\` *Protocollo Blood Attivo*
+┃ 🛡️ \`Stato:\` *Protocollo Attivo*
 ┃
 ┃ 『 👤 』 \`Target:\` @${userTag}
 ┃ 『 ⚠️ 』 \`Rilevato:\` *Tentativo di Crash*
@@ -63,7 +63,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isSam }) {
             mentions: [m.sender],
             contextInfo: {
                 externalAdReply: {
-                    title: 'BLOOD CRASH PROTECTION',
+                    title: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
                     body: 'Minaccia neutralizzata',
                     thumbnailUrl: 'https://qu.ax/TfUj.jpg',
                     mediaType: 1,
