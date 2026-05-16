@@ -2,37 +2,37 @@ import { promises as fs } from 'fs'
 import { join } from 'path'
 
 const emojicategoria = {
-  info: '✨',
+  info: '📜',
   main: '🍪',
-  sicurezza: '🌟'
+  sicurezza: '🛡️'
 }
 
 let tags = {
-  main: '🌟 `RICETTE PRINCIPALI` 🌟',
-  sicurezza: '🌾 `PROTEZIONE FORNO` 🌾',
-  info: '📜 `REGISTRO PASTICCERIA` 📜'
+  main: 'RICETTE PRINCIPALI',
+  sicurezza: 'DIFESA FORNO',
+  info: 'REGISTRO PASTICCERIA'
 }
 
-// ESTETICA TOTALMENTE RIVOLUZIONATA: PANDISTELLE STYLE 🍪✨
+// ESTETICA TOTALMENTE RIVOLUZIONATA: PANDI-BOT STYLE 🍪✨🌌
 const defaultMenu = {
   testoInizio: `
-╭━━━━━━━ ✨ 🌟 ✨ ━━━━━━━╮
-      🍪  𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐁𝐎𝐓  🍪
-╰━━━━━━━ ✨ 🌟 ✨ ━━━━━━━╯
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🍪  𝐏𝐀𝐍𝐃𝐈-𝐁𝐎𝐓 𝐒𝐘𝐒𝐓𝐄𝐌  🍪
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-╔═════════════════════════╗
-  🌾 » 𝐂𝐮𝐨𝐜𝐨: %name
-  ⏰ » 𝐋𝐢𝐞𝐯𝐢𝐭𝐚𝐳𝐢𝐨𝐧𝐞: %uptime
-  🍪 » 𝐁𝐢𝐬𝐜𝐨𝐭𝐭𝐢 𝐒𝐟𝐨𝐫𝐧𝐚𝐭𝐢: %totalreg
-╚═════════════════════════╝
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: %name
+│ ⏰ 𝐋𝐢𝐞𝐯𝐢𝐭𝐚𝐳𝐢𝐨𝐧𝐞: %uptime
+│ 🍪 𝐒𝐟𝐨𝐫𝐧𝐚𝐭𝐢: %totalreg
+╰──────────────🌾
 
-✨ *𝐈𝐋 𝐓𝐔𝐎 𝐑𝐈𝐂𝐄𝐓𝐓𝐀𝐑𝐈𝐎:*
+🌟 *𝐈𝐋 𝐓𝐔𝐎 𝐑𝐈𝐂𝐄𝐓𝐓𝐀𝐑𝐈𝐎* 🌟
 `.trimStart(),
 
-  header: '╭───  %category  ───🧱\n│',
-  body: '├ ⭐  『%emoji』 %cmd',
-  footer: '╰───────────────────────── 🍪\n',
-  testoFine: `_✨ Cotto al punto giusto da BLOOD ✨_`,
+  header: '╭─── [ %category ] ───✨',
+  body: '│  %emoji  %cmd',
+  footer: '╰───────────────────── 🍪\n',
+  testoFine: `_✨ Cotto al punto giusto e sfornato con amore da BLOOD ✨_`,
 }
 
 const bldButtons = [
@@ -65,16 +65,19 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     let _text = [
       defaultMenu.testoInizio,
       ...menuTags.map(tag => {
-        return defaultMenu.header.replace(/%category/g, tags[tag]) + '\n' + [
-          ...help
-            .filter(menu => menu.tags.includes(tag))
-            .map(menu => menu.help.map(h => 
-              defaultMenu.body
-                .replace(/%cmd/g, menu.prefix ? h : _p + h)
-                .replace(/%emoji/g, emojicategoria[tag])
-            ).join('\n')),
+        let commands = help
+          .filter(menu => menu.tags.includes(tag))
+          .flatMap(menu => menu.help.map(h => 
+            defaultMenu.body
+              .replace(/%cmd/g, menu.prefix ? h : _p + h)
+              .replace(/%emoji/g, emojicategoria[tag])
+          )).join('\n')
+
+        return [
+          defaultMenu.header.replace(/%category/g, tags[tag]),
+          commands,
           defaultMenu.footer
-        ].join('\n')
+        ].filter(Boolean).join('\n')
       }),
       defaultMenu.testoFine
     ].join('\n')
@@ -91,7 +94,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     await conn.sendMessage(m.chat, {
       text: text.trim(),
-      footer: "🍪 P A N D I S T E L L E  -  S Y S T E M",
+      footer: "🍪 𝐏 𝐀 𝐍 𝐃 𝐈 - 𝐁 𝐎 𝐓  -  𝐒 𝐘 𝐒 𝐓 𝐄 𝐌",
       buttons: buttons,
       headerType: 1,
       viewOnce: true
