@@ -1,45 +1,42 @@
-import { promises } from 'fs'
-import { join } from 'path'
 import { xpRange } from '../lib/levelling.js'
 import moment from 'moment-timezone'
-
-// --- PERCORSO DIRETTO AL FILE ---
-// Il file si chiama 'menu-giochi.jpeg' ed è nella cartella principale del bot
-const localImg = join(process.cwd(), 'menu-giochi.jpeg'); 
+import { promises } from 'fs'
+import { join } from 'path'
 
 const defaultMenu = {
   before: `
-╔════════════════════╗
-  🎮  *G A M E  C E N T E R* 🎮
-╚════════════════════╝
- ┌───────────────────
- │ 👤 *Utente:* %name
- │ 🏆 *Livello:* %level
- │ 💰 *Eris:* %eris
- │ 🎖️ *Rango:* %role
- └───────────────────
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🎮  <b>PANDI - GIOCHI</b>  🎮
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+
+╭──────────────👤
+│ 🧑‍🍳 <b>Cuoco:</b> %name
+│ 🏆 <b>Livello:</b> %level
+│ 💰 <b>Eris:</b> %eris
+│ 🎖️ <b>Rango:</b> %role
+╰──────────────🌾
  
- *Seleziona una sfida:*
+🌟 <b>SELEZIONA UNA SFIDA DAL FORNO:</b>
 `.trimStart(),
-  header: '╭──〔 %category 〕──✦',
+  header: '╭─── [ %category ] ───✨',
   body: '│ 🕹️  %cmd %islimit%isPremium',
-  footer: '╰───────────────━━━━\n',
-  after: `_Usa %p [comando] per giocare_`,
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Usa %p [comando] per iniziare a cucinare e giocare ✨_`,
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
-  let tags = { 'giochi': 'GIOCHI DISPONIBILI' }
+  let tags = { 'giochi': 'SFIDE DELLA PASTICCERIA' }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     // Dati Utente
     let user = global.db.data.users[m.sender] || {}
     let { exp = 0, level = 1, role = 'Utente', eris = 0, limit = 10 } = user
     let name = await conn.getName(m.sender)
     let uptime = clockString(process.uptime() * 1000)
 
-    // Filtro Plugin
+    // Filtro Plugin (Invariato)
     let help = Object.values(global.plugins)
       .filter(p => !p.disabled)
       .map(p => ({
@@ -81,18 +78,17 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     let text = _text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join('|')})`, 'g'), (_, name) => '' + replace[name])
 
-    // --- INVIO CON L'IMMAGINE SPECIFICA ---
+    await m.react('🎮')
+
+    // --- INVIO SOLO TESTO (IMMAGINE COMPLETAMENTE RIMOSSA) ---
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       mentions: [m.sender]
     }, { quoted: m })
 
-    await m.react('🎮')
-
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, `❌ Errore: Il file 'menu-giochi.jpeg' non è stato trovato nella cartella principale.`, m)
+    conn.reply(m.chat, `❌ Errore nel modulo giochi dell'impasto: ${e.message}`, m)
   }
 }
 
