@@ -3,16 +3,13 @@ import { join } from 'path'
 
 let handler = async (m, { conn, usedPrefix: _p, command, args, isOwner, isAdmin }) => {
   const userName = m.pushName || 'Utente'
-  
-  // --- PERCORSO IMMAGINE LOCALE ---
-  const localImg = join(process.cwd(), 'menu-sicurezza.jpeg')
 
   global.db.data.chats[m.chat] = global.db.data.chats[m.chat] || {}
   global.db.data.settings[conn.user.jid] = global.db.data.settings[conn.user.jid] || {}
   let chat = global.db.data.chats[m.chat]
   let bot = global.db.data.settings[conn.user.jid]
 
-  // --- CONFIGURAZIONE MODULI ---
+  // --- CONFIGURAZIONE MODULI (Invariata) ---
   const securityFeatures = [
     { key: 'antigore', name: '🚫 Antigore', desc: 'Blocca contenuti splatter/gore' },
     { key: 'modoadmin', name: '🛡️ Soloadmin', desc: 'Solo gli admin usano il bot' },
@@ -39,51 +36,51 @@ let handler = async (m, { conn, usedPrefix: _p, command, args, isOwner, isAdmin 
     { key: 'solocreatore', name: '👑 Solo Creatore', desc: 'Bot risponde solo all\'owner' }
   ]
 
-  // --- GENERAZIONE MENU ---
+  // --- GENERAZIONE MENU PANDI-BOT ---
   if (!args.length || /menu|help/i.test(args[0])) {
     let text = `
-┎━━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐌𝐀𝐒𝐓𝐄𝐑 𝐂𝐎𝐍𝐓𝐑𝐎𝐋  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━━┙
-┌────────────────────┐
-  👤 𝚄𝚜𝚎𝚛: ${userName}
-  📡 𝚂𝚝𝚊𝚝𝚞𝚜: 𝙾𝚗𝚕𝚒𝚗𝚎
-└────────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🛡️  𝐏𝐀𝐍𝐃𝐈 - 𝐒𝐄𝐂𝐔𝐑𝐈𝐓𝐘  🛡️
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ɪɴsᴛʀᴜᴢɪᴏɴɪ ᴏᴘᴇʀᴀᴛɪᴠᴇ 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: ${userName}
+│ 📡 𝐒𝐭𝐚𝐭𝐮𝐬: Sicurezza Attiva
+╰──────────────🌾
+
+🌾 *𝐈𝐒𝐓𝐑𝐔𝐙𝐈𝐎𝐍𝐈 𝐅𝐎𝐑𝐍𝐎:*
 > Attiva o disattiva i moduli:
-*│ ➤* ${_p}*attiva* <nome>
-*│ ➤* ${_p}*disattiva* <nome>
+│  ➤  ${_p}*attiva* [nome]
+│  ➤  ${_p}*disattiva* [nome]
 
-*┍━━━━━〔 🛡️ sɪᴄᴜʀᴇᴢᴢᴀ 〕━━━━━┑*
-${securityFeatures.map(f => `┇ ${f.name}\n┇ _${f.desc}_\n┇ ➤ *${f.key}*\n┇`).join('\n')}
-*┕━━━━━━━──ׄ──ׅ──ׄ──━━━━━━━┙*
+╭─── [ 🌾 PROTEZIONE FORNO ] ───✨
+${securityFeatures.map(f => `│  ${f.name}\n│  _${f.desc}_\n│  » Comando: *${f.key}*\n│`).join('\n')}
+╰───────────────────── 🍪
 
-*┍━━━━━〔 🤖 ᴀᴜᴛᴏᴍᴀᴢɪᴏɴᴇ 〕━━━━━┑*
-${automationFeatures.map(f => `┇ ${f.name}\n┇ _${f.desc}_\n┇ ➤ *${f.key}*\n┇`).join('\n')}
-*┕━━━━━━━──ׄ──ׅ──ׄ──━━━━━━━┙*
+╭─── [ 🤖 AUTOMAZIONE ] ───✨
+${automationFeatures.map(f => `│  ${f.name}\n│  _${f.desc}_\n│  » Comando: *${f.key}*\n│`).join('\n')}
+╰───────────────────── 🍪
 
-_ʙʟᴅ-ʙᴏᴛ sᴇᴄᴜʀɪᴛʏ ɪɴᴛᴇʀꜰᴀᴄᴇ_`
+_✨ Protezione totale curata da BLOOD ✨_`
 
-    // Invio con immagine locale
+    // Invio solo testo, senza immagine
     await conn.sendMessage(m.chat, { 
-      image: { url: localImg }, 
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "🛡️ 𝐒𝐘𝐒𝐓𝐄𝐌 𝐒𝐄𝐂𝐔𝐑𝐈𝐓𝐘 𝐂𝐎𝐍𝐓𝐑𝐎𝐋 🛡️"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐒𝐘𝐒𝐓𝐄𝐌 🛡️"
         }
       }
     }, { quoted: m })
     return
   }
 
-  // --- LOGICA DI ATTIVAZIONE ---
+  // --- LOGICA DI ATTIVAZIONE (Invariata) ---
   let isEnable = !/disattiva|off|0/i.test(command)
   let type = args[0].toLowerCase()
-  let status = isEnable ? 'ATTIVATO ✅' : 'DISATTIVATO ❌'
+  let status = isEnable ? 'ATTIVATO 🌾' : 'DISATTIVATO ❌'
 
   let dbKey = type
   if (type === 'antilink') dbKey = 'antiLink'
@@ -104,11 +101,11 @@ _ʙʟᴅ-ʙᴏᴛ sᴇᴄᴜʀɪᴛʏ ɪɴᴛᴇʀꜰᴀᴄᴇ_`
     if (!isOwner) return m.reply('👑 Solo per l\'Owner')
     bot[dbKey] = isEnable
   } else {
-    return m.reply('❓ Modulo non trovato.')
+    return m.reply('❓ Modulo non trovato nell\'impasto.')
   }
 
   await m.react(isEnable ? '✅' : '❌')
-  m.reply(`『 🛡️ 』 *SISTEMA AGGIORNATO*\n\nModulo: *${type.toUpperCase()}*\nStato: *${status}*`)
+  m.reply(`『 🍪 』 *SISTEMA AGGIORNATO*\n\nModulo: *${type.toUpperCase()}*\nStato: *${status}*`)
 }
 
 handler.command = ['attiva', 'disattiva', 'on', 'off', 'enable', 'disable']
