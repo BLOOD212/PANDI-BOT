@@ -34,7 +34,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isSam }) {
   const header = `⋆｡˚『 ╭ \`ANTIMEDIA SYSTEM\` ╯ 』˚｡⋆`
   const text = `${header}
 ╭
-┃ 🛡️ \`Stato:\` *Protocollo Blood Attivo*
+┃ 🛡️ \`Stato:\` *Protocollo Attivo*
 ┃
 ┃ 『 👤 』 \`Target:\` @${m.sender.split('@')[0]}
 ┃ 『 🖼️ 』 \`Rilevato:\` *Media Permanente*
@@ -49,7 +49,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isSam }) {
       mentions: [m.sender],
       contextInfo: {
         externalAdReply: {
-          title: 'BLOOD SECURITY',
+          title: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
           body: 'Restrizione media attiva',
           thumbnailUrl: 'https://qu.ax/TfUj.jpg',
           mediaType: 1
