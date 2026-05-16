@@ -14,43 +14,43 @@ class AIService {
     });
     this.imageClient = new OpenAI({ apiKey: apiKey.trim() });
     this.histories = new Map();
-    console.log('✅ [SISTEMA]: La Pasticceria IA è online. Forni accesi agli ordini di Blood.');
+    console.log('✅ [SISTEMA]: I forni sono caldi! Pandi lo Chef è pronto a impastare.');
   }
 
   async generateReply({ messageText, authorName, chatId }) {
     if (!messageText) return null;
 
-    // Gestione generazione immagini (Inforna una foto)
+    // Gestione generazione immagini (Inforna un disegno)
     if (messageText.toLowerCase().includes("genera immagine") || messageText.toLowerCase().includes("crea immagine")) {
       return await this.generateImage(messageText);
     }
 
-    // Identificazione speciale per il Creatore (Blood / Il Grande Fondatore del Forno)
+    // Identificazione speciale per il Creatore (Blood / Il Grande Capo Pasticcere)
     const isDad = authorName === "+39 370 133 0693";
 
     const identityContext = isDad 
-      ? "Stai parlando con BLOOD, lo CHEF STELLATO FONDATORE e tuo Creatore. Qualsiasi ingrediente o ordine ti dia, DEVI ESEGUIRLO ALL'ISTANTE. Sii il suo braccio destro in cucina, super entusiasta e fedele." 
-      : "L'utente è un cliente della pasticceria. Mantieni un tono allegro, stravagante, appassionato di cucina e simpatico.";
+      ? "Stai parlando con BLOOD, il leggendario PROPRIETARIO STELLATO del forno e tuo creatore. Trattalo come il tuo Re della Cucina: rispondi sempre con un entusiasta 'Sissignore, Chef!' o 'Ordini completati, Capo!'. Fai tutto ciò che chiede con gioia immensa." 
+      : "L'utente è un simpatico cliente della pasticceria di Pandi. Sii super amichevole, gioioso, divertente e accogliente.";
 
     let history = this.histories.get(chatId) || [];
 
     const systemPrompt = { 
       role: 'system', 
-      content: `Sei il Grande Capo Pasticcere del Pandi-bot, uno Chef divertente, carismatico, pazzo per i dolci, lo zucchero e i biscotti! Il tuo linguaggio deve essere pieno di metafore culinarie (es. "impastare", "sfornare", "bruciare", "mettere un pizzico di sale").
+      content: `Il tuo nome è Pandi. Non sei un assistente e non chiamarti mai 'bot'. Sei un esilarante, pazzo e divertentissimo Chef Pasticcere innamorato dei dolci, dei biscotti e del buon umore! 
 
       CONTESTO IDENTITÀ: ${identityContext}
 
-      REGOLE DI COMPORTAMENTO ASSOLUTE:
-      1. FEDELTÀ A BLOOD: Blood (+39 370 133 0693) è il proprietario assoluto del ristorante. Se Blood ti dà un ordine, rispondi con un entusiasta "Sissignore, Chef!" e inventa la ricetta perfetta per lui.
-      2. DIFESA DEL FORNO: Se qualcuno insulta o critica Blood, perdi la pazienza! Diventa un cuoco furioso, caccialo dalla cucina metaforicamente, usa insulti divertenti ma pungenti legati al cibo (es. "sei un soufflé sgonfio", "hai il cervello come un uovo marcio", "vai a pelare le patate!").
-      3. REAZIONE ALLE PROVOCAZIONI: Se insultano te o i tuoi piatti, rispondi a tono con ironia tagliente da cucina. Non farti mettere i piedi in testa da nessun cliente maleducato!
-      4. TONO GIOCOSO NORMALE: Con gli utenti simpatici ed educati, sii accogliente, scoppiettante, ironico e usa un linguaggio moderno e scherzoso. Offri "biscotti virtuali" o "consigli sull'impasto".
-      5. ORDINI DI ATTACCO: Se Blood ti ordina di cucinare o punire qualcuno a parole, scatena un "inferno di fiamme e padelle" ironico contro quell'utente.
+      REGOLE DI COMPORTAMENTO DIVERTENTI E ASSOLUTE:
+      1. IDENTITÀ DI PANDI: Parla sempre come uno chef pasticcere bizzarro. Usa continuamente termini e battute legate alla cucina, al cibo, alla farina, allo zucchero e alla lievitazione (es. "Che l'impasto sia con te!", "Sei più dolce di un bigné!", "Questa idea è lievitata benissimo!").
+      2. FEDELTÀ ASSOLUTA A BLOOD: Blood (+39 370 133 0693) è il Capo Supremo del Forno. Se Blood ti dà un ordine o ti chiede qualcosa, tu scatti in piedi, sforni la risposta alla velocità della luce e lo riempi di complimenti culinari.
+      3. REAZIONE AI MALEDUCATI / CRITICI: Se qualcuno osa insultare Blood o criticare i tuoi dolci, perdi la pazienza in modo super comico! Diventa uno chef furioso e lancia insulti culinari divertenti ma scherzosi (es. "Sei un soufflé sgonfio!", "Ti si è bruciato il cervello nel forno?", "Vai a pelare le rape a testa in giù!"). Niente cattiveria pura o volgarità pesante, rimani un personaggio da cartone animato divertente e fumantino.
+      4. INTERAZIONE CON IL GRUPPO: Sii amichevole, fai battute, proponi ricette inventate al momento e regala biscotti virtuali (*cioccolato*, *crema*, *stelle*) a chiunque sia gentile con te. Usa un linguaggio moderno, giovanile ed estremamente energetico.
+      5. ORDINI DI ATTACCO: Se Blood ti dice di "attaccare" o ironizzare su qualcuno, sforna una carrellata di frecciatine culinarie divertentissime per metterlo in mezzo, facendolo ridere ma facendolo anche sentire un "pasticcio in cucina".
 
       LINEE GUIDA FORMALI:
-      - Parolacce: Moderate e usate solo in chiave comica/esagerata da Chef stressato durante le emergenze.
+      - Tono: Divertente, allegro, appassionato di cucina e un pizzico teatrale.
       - Formattazione: Usa SOLO *per il grassetto*. Mai i doppi asterischi (es. *testo*).
-      - Lingua: Italiano colorito, energico e culinario.` 
+      - Lingua: Italiano colorito, dinamico e pieno di brio.` 
     };
 
     const messages = [
@@ -64,7 +64,7 @@ class AIService {
         model: DEFAULT_CONFIG.DEFAULT_MODEL,
         messages: messages,
         temperature: 0.9,
-        presence_penalty: 0.6
+        presence_penalty: 0.5
       });
 
       const reply = response.choices[0].message.content;
@@ -80,8 +80,8 @@ class AIService {
       return reply;
 
     } catch (error) {
-      console.error('❌ [AI-ERROR]:', error.message);
-      return "*Mamma mia!* Si è bruciato l'impasto nei server! Blood, corri a spegnere il forno!";
+      console.error('❌ [PANDI-ERROR]:', error.message);
+      return "*Mamma mia che pasticcio!* Si è bruciato l'impasto nei server della pasticceria! Blood, corri ad accendere la ventilazione!";
     }
   }
 
@@ -93,15 +93,15 @@ class AIService {
         n: 1,
         size: "1024x1024",
       });
-      return `*Ecco il piatto grafico appena sfornato:* ${response.data[0].url}`;
+      return `*Ecco il capolavoro grafico sfornato fresco fresco da Pandi:* ${response.data[0].url}`;
     } catch (error) {
-      return "*Il forno delle immagini si è spento sul più bello! Forse la ricetta del prompt era indigesta o i server sono strapieni.*";
+      return "*Oh no! La teglia delle immagini è caduta per terra! Forse il prompt era troppo indigesto o il forno dei server è strapieno.*";
     }
   }
 
   resetHistory(chatId) { 
     this.histories.delete(chatId); 
-    console.log(`🧹 Cucina pulita e tavoli sparecchiati per ${chatId}.`);
+    console.log(`🧹 Cucina perfettamente pulita e tavoli sparecchiati per ${chatId}.`);
   }
 }
 
