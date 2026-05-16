@@ -6,30 +6,31 @@ import os from 'os'
 
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐒𝐄𝐀𝐑𝐂𝐇  ✧    ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  🛰️ 𝚂𝚝𝚊𝚝𝚞𝚜: 𝙾𝚗𝚕𝚒𝚗𝚎
-  🔍 𝚂𝚎𝚌𝚝𝚘𝚛: 𝙳𝚊𝚝𝚊 𝚂𝚌𝚊𝚗
-└───────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🔍  𝐏𝐀𝐍𝐃𝐈 - 𝐑𝐈𝐂𝐄𝐑𝐂𝐇𝐄  🔍
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ɪɴɪᴛɪᴀᴛɪɴɢ ᴅᴇᴇᴘ sᴄᴀɴ... 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: %name
+│ ⏰ 𝐋𝐢𝐞𝐯𝐢𝐭𝐚𝐳𝐢𝐨𝐧𝐞: %uptime
+│ 🕵️ 𝐒𝐞𝐭𝐭𝐨𝐫𝐞: Scansione Ricette
+╰──────────────🌾
+
+🌟 *𝐈𝐋 𝐓𝐔𝐎 𝐓𝐀𝐂𝐂𝐔𝐈𝐍𝐎 𝐃𝐈 𝐑𝐈𝐂𝐄𝐑𝐂𝐀:*
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ 🔎  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ʙʟᴅ-ʙᴏᴛ ɪɴᴛᴇʟʟɪɢᴇɴᴄᴇ sʏsᴛᴇᴍ_`
+  header: '╭─── [ %category ] ───✨',
+  body: '│  🔍  *%cmd*',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Ricerca sfornata con precisione da BLOOD ✨_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   let tags = {
-    'ricerca': 'ᴅɪɢɪᴛᴀʟ ɪɴᴠᴇsᴛɪɢᴀᴛɪᴏɴ'
+    'ricerca': 'INVESTIGAZIONE COOKIE'
   }
 
   try {
-    let name = await conn.getName(m.sender) || 'User'
+    let name = await conn.getName(m.sender) || 'Ospite'
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
     let user = global.db.data.users[m.sender]
@@ -72,7 +73,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝚂𝙴𝙰𝚁𝙲𝙷 𝚂𝚈𝚂𝚃𝙴𝙼 ✧"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐒𝐄𝐀𝐑𝐂𝐇 🔍"
         }
       }
     }, { quoted: m })
@@ -81,7 +82,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Error in Search Module.', m)
+    conn.reply(m.chat, '❌ Errore nel modulo di ricerca dell\'impasto.', m)
   }
 }
 
