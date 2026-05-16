@@ -44,7 +44,7 @@ export async function before(m, { conn, isAdmin, isOwner, isSam }) {
   const text = `
 ⋆｡˚『 ╭ \`SISTEMA ANTIBOT\` ╯ 』˚｡⋆
 ╭
-┃ 🛡️ \`Stato:\` *Protocollo Blood Attivo*
+┃ 🛡️ \`Stato:\` *Protocollo Attivo*
 ┃
 ┃ 『 👤 』 \`Target:\` @${m.sender.split('@')[0]}
 ┃ 『 🤖 』 \`Dispositivo:\` *${device.toUpperCase()}*
@@ -58,7 +58,7 @@ export async function before(m, { conn, isAdmin, isOwner, isSam }) {
     mentions: [m.sender],
     contextInfo: {
       externalAdReply: {
-        title: 'BLD-BLOOD SECURITY',
+        title: '𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭',
         body: 'Rilevamento connessione non sicura',
         thumbnailUrl: 'https://qu.ax/TfUj.jpg', // Usa la tua immagine se ne hai una specifica
         mediaType: 1,
