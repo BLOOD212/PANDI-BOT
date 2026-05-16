@@ -1,37 +1,36 @@
 import { promises } from 'fs'
 import { join } from 'path'
 
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-strumenti.jpeg');
-
 const defmenu = {
   before: `
-┏━━━━━━━━━━━━━━━━━━━━┓
-   💉  *B L O O D  -  T O O L S* 💉
-┗━━━━━━━━━━━━━━━━━━━━┛
- ┌───────────────────
- │ 🧪 *Soggetto:* %name
- │ ⚙️ *Moduli:* Strumenti
- │ ⚠️ *Status:* Deep Scan
- └───────────────────
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🛠️  𝐏𝐀𝐍𝐃𝐈 - 𝐔𝐓𝐄𝐍𝐒𝐈𝐋𝐈  🛠️
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨cu: %name
+│ 🧺 𝐒𝐞𝐭𝐭𝐨𝐫𝐞: Utensili & Attrezzi
+╰──────────────🌾
+
+🌟 *𝐈𝐋 𝐓𝐔𝐎 𝐂𝐀𝐑𝐑𝐄𝐋𝐋𝐎 𝐃𝐀 𝐋𝐀𝐕𝐎𝐑𝐎:*
 `.trimStart(),
-  header: '      ⋆｡˚『 %category 』˚｡⋆\n╭',
-  body: '│ ⚡  %cmd',
-  footer: '*╰━━━━━──ׄ──ׅ──ׄ──━━━━━*\n',
-  after: `_☣️ Estrazione dati completata._`.trimEnd()
+  header: '╭─── [ %category ] ───✨',
+  body: '│  🛠️  %cmd',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Utensili pronti all'uso selezionati da BLOOD ✨_`.trimEnd()
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   let tags = {
-    'strumenti': 'LABORATORIO BLOOD'
+    'strumenti': 'STRUMENTI PASTICCERIA'
   }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
-    let name = await conn.getName(m.sender) || 'Soggetto Ignoto'
-    
-    // Filtro plugin per la categoria strumenti
+
+    let name = await conn.getName(m.sender) || 'Ospite'
+
+    // Filtro plugin per la categoria strumenti (Invariato)
     let help = Object.values(global.plugins)
       .filter(plugin => !plugin.disabled && plugin.tags && plugin.tags.includes('strumenti'))
       .map(plugin => ({
@@ -52,26 +51,25 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     let fake = global.fake || {};
 
-    await m.react('🧪')
+    await m.react('🛠️')
 
-    // --- INVIO COME IMMAGINE (SOSTITUITO VIDEO) ---
+    // --- INVIO SOLO TESTO (IMMAGINE RIMOSSA) ---
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: _text.trim(),
+      text: _text.trim(),
       contextInfo: {
         ...fake.contextInfo,
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           ...fake.contextInfo?.forwardedNewsletterMessageInfo,
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "🩸 Cyber Blood - Tools ☣️"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐓𝐎𝐎𝐋𝐒 🛠️"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '☣️ ERRORE NEL SETTORE STRUMENTI: File immagine mancante o corrotto.', m)
+    conn.reply(m.chat, `❌ Errore nel modulo utensili: ${e.message}`, m)
   }
 }
 
