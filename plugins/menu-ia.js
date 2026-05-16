@@ -1,9 +1,6 @@
 import { xpRange } from '../lib/levelling.js'
 import { join } from 'path'
 
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-ia.jpeg');
-
 const emojicategoria = {
   iatesto: '📝',
   iaaudio: '🎧',
@@ -11,35 +8,36 @@ const emojicategoria = {
 }
 
 let tags = {
-  'iatesto': '𝐈𝐀 𝐓𝐄𝐒𝐓𝐎',
-  'iaaudio': '𝐈𝐀 𝐀𝐔𝐃𝐈𝐎',
-  'iaimmagini': '𝐈𝐀 𝐈𝐌𝐌𝐀𝐆𝐈𝐍𝐈'
+  'iatesto': 'IA TESTO',
+  'iaaudio': 'IA AUDIO',
+  'iaimmagini': 'IA IMMAGINI'
 }
 
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐈𝐍𝐓𝐄𝐋𝐋𝐈𝐆𝐄𝐍𝐂𝐄  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  🏆 𝙻𝚟𝚕: %level
-  🪐 𝚄𝚙𝚝𝚒𝚖𝚎: %uptime
-  👥 𝚄𝚜𝚎𝚛𝚜: %totalreg
-└───────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🧠  𝐏𝐀𝐍𝐃𝐈 - 𝐙𝐔𝐂𝐂𝐇𝐄𝐑𝐎 𝐈𝐀  🧠
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ᴀᴄᴄᴇssɪɴɢ ɴᴇᴜʀᴀʟ ɴᴇᴛᴡᴏʀᴋ... 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: %name
+│ 🏆 𝐋𝐢𝐯𝐞𝐥𝐥𝐨: %level
+│ ⏰ 𝐋𝐢𝐞𝐯𝐢𝐭𝐚𝐳𝐢𝐨𝐧𝐞: %uptime
+│ 🍪 𝐒𝐟𝐨𝐫𝐧𝐚𝐭𝐢: %totalreg
+╰──────────────🌾
+
+🌟 *𝐈𝐋 𝐓𝐔𝐎 𝐌𝐈𝐗𝐄𝐑 𝐍𝐄𝐔𝐑𝐀𝐋𝐄:*
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ %emoji  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ꜱʏꜱᴛᴇᴍ ɪᴀ ᴏᴘᴇʀᴀᴛɪᴏɴᴀʟ_`
+  header: '╭─── [ %category ] ───✨',
+  body: '│ %emoji  *%cmd*',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Algoritmi intelligenti sfornati con cura da BLOOD ✨_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     let { level = 0, role = 'User' } = global.db.data.users[m.sender] || {}
     let name = await conn.getName(m.sender) || 'Utente'
     let uptime = clockString(process.uptime() * 1000)
@@ -49,10 +47,15 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
       .filter(plugin => !plugin.disabled && plugin.tags)
       .filter(plugin => ['iatesto', 'iaaudio', 'iaimmagini'].some(t => plugin.tags.includes(t)))
       .map(plugin => ({
-        help: Array.isArray(plugin.help) ? plugin.help : [plugin.help],
+        help: Array.isArray(plugin.help) ? p => plugin.help : [plugin.help],
         tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
         prefix: 'customPrefix' in plugin
       }))
+
+    // Patch di sicurezza per mappare correttamente gli array in help
+    help.forEach(plugin => {
+      plugin.help = Array.isArray(plugin.help) ? plugin.help : [plugin.help]
+    })
 
     let menuTags = Object.keys(tags)
     let _text = [
@@ -83,22 +86,21 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
 
     await m.react('🧠')
 
-    // --- INVIO CON IMMAGINE E CONTEXT GRUPPO ---
+    // --- INVIO SOLO TESTO (IMMAGINE COMPLETAMENTE RIMOSSA) ---
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙸𝙽𝚃𝙴𝙻𝙻𝙸𝙶𝙴𝙽𝙲𝙴 ✧"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐈𝐍𝐓𝐄𝐋𝐋𝐈𝐆𝐄𝐍𝐂𝐄 🧠"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Errore nel caricamento del modulo IA.', m)
+    conn.reply(m.chat, `❌ Errore nel modulo IA dell'impasto: ${e.message}`, m)
   }
 }
 
