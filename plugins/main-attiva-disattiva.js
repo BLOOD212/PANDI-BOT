@@ -50,22 +50,40 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isS
   if (args[0] && ['enable', 'disable', 'attiva', 'disattiva', 'on', 'off'].includes(command?.toLowerCase())) {
     let type = args[0].toLowerCase();
     const feat = aliasMap.get(type);
-    if (!feat) return m.reply(`『 ❌ 』 Modulo *${type}* non trovato.`);
-    if (feat.perm === PERM.OWNER && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato.');
-    if (feat.perm === PERM.ADMIN && !isAdmin && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato.');
+    if (!feat) return m.reply(`『 ❌ 』 Modulo *${type}* non trovato nell'impasto.`);
+    if (feat.perm === PERM.OWNER && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato dal proprietario del forno.');
+    if (feat.perm === PERM.ADMIN && !isAdmin && !isOwner && !isSam) return m.reply('『 ❌ 』 Accesso negato: servono i privilegi da Admin.');
     const target = feat.store === 'bot' ? botSettings : chat;
     target[feat.key] = isEnable;
-    return m.reply(`*〘 📡 BLD-SYSTEM 〙*\n\nModulo: ${feat.name}\nStato: *${isEnable ? 'ATTIVATO 🟢' : 'DISATTIVATO 🔴'}*`);
+    return m.reply(`『 🍪 』 *SISTEMA AGGIORNATO*\n\nModulo: ${feat.name}\nStato: *${isEnable ? 'ATTIVATO 🌾' : 'DISATTIVATO ❌'}*`);
   }
 
   if (['enable', 'disable', 'attiva', 'disattiva'].includes(command?.toLowerCase())) {
     const getStatus = (f) => (f.store === 'bot' ? botSettings[f.key] : chat[f.key]) ? '🟢' : '🔴';
-    let menu = `┎━━━━━━━━━━━━━━━━━━━━┑\n┃   ✧  *𝐁𝐋𝐃 - 𝐌𝐀𝐒𝐓𝐄𝐑 𝐂𝐎𝐍𝐓𝐑𝐎𝐋* ✧   ┃\n┖━━━━━━━━━━━━━━━━━━━━┙\n\n`;
+    
+    let menu = `
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ 🛡️  𝐏𝐀𝐍𝐃𝐈 - 𝐌𝐀𝐒𝐓𝐄𝐑 𝐂𝐎𝐍𝐓𝐑𝐎𝐋  🛡️
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: ${m.pushName || 'Utente'}
+│ 📡 𝐒𝐭𝐚𝐭𝐮𝐬: Pannello di Configurazione
+╰──────────────🌾
+
+🌾 *𝐈𝐒𝐓𝐑𝐔𝐙𝐈𝐎𝐍𝐈 𝐅𝐎𝐑𝐍𝐎:*
+> Cambia lo stato dei moduli scrivendo:
+│  ➤  ${usedPrefix}${command} [nome-comando]
+
+╭─── [ 🌾 REGISTRO INTERFACCIA ] ───✨\n`;
+
     featureRegistry.forEach(f => {
-        menu += `┇ ${getStatus(f)} ${f.name}\n┇ _${f.desc}_\n┇ ➤ *${usedPrefix}${command} ${f.key}*\n┇\n`;
+        menu += `│  ${getStatus(f)} ${f.name}\n│  _${f.desc}_\n│  » Uso: *${usedPrefix}${command} ${f.key}*\n│\n`;
     });
-    menu += `_ʙʟᴅ-ʙᴏᴛ sᴇᴄᴜʀɪᴛʏ ɪɴᴛᴇʀꜰᴀᴄᴇ_`;
-    return conn.sendMessage(m.chat, { text: menu }, { quoted: m });
+    
+    menu += `╰───────────────────── 🍪\n\n_✨ Sicurezza e automazione sfornate da BLOOD ✨_`;
+    
+    return conn.sendMessage(m.chat, { text: menu.trim() }, { quoted: m });
   }
 };
 
@@ -86,7 +104,7 @@ handler.before = async function (m) {
     });
     if (reply) return this.reply(m.chat, reply, m);
   } catch (e) {
-    console.error('Errore IA:', e);
+    console.error('Errore IA dell\'impasto:', e);
   }
 };
 
