@@ -1,43 +1,41 @@
 import { xpRange } from '../lib/levelling.js'
 import { join } from 'path'
 
-// --- PERCORSO IMMAGINE ---
-const localImg = join(process.cwd(), 'menu-premium.jpeg');
-
 const defaultMenu = {
   before: `
-┎━━━━━━━━━━━━━━━━━━━┑
-┃   ✧  𝐁𝐋𝐃 - 𝐏𝐑𝐄𝐌𝐈𝐔𝐌  ✧   ┃
-┖━━━━━━━━━━━━━━━━━━━┙
-┌───────────────────┐
-  👤 𝚄𝚜𝚎𝚛: %name
-  🏆 𝚁𝚊𝚗𝚔: %role
-  ✨ 𝚂𝚝𝚊𝚝𝚞𝚜: 𝙴𝚕𝚒𝚝𝚎
-└───────────────────┘
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
+ ⭐  𝐏𝐀𝐍𝐃𝐈 - 𝐏𝐑𝐄𝐌𝐈𝐔𝐌  ⭐
+✨🌌 🌟 🌌✨🌌 🌟 🌌✨
 
-*〘 ᴀᴄᴄᴇssɪɴɢ ᴘʀɪᴠᴀᴛᴇ ɴᴏᴅᴇ... 〙*
+╭──────────────👤
+│ 🧑‍🍳 𝐂𝐮𝐨𝐜𝐨: %name
+│ 🏆 𝐑𝐚𝐧𝐤: %role
+│ ⭐ 𝐒𝐭𝐚𝐭𝐮𝐬: Pasticcere Élite
+╰──────────────🌾
+
+🌟 *𝐈𝐍𝐆𝐑𝐄𝐃𝐈𝐄𝐍𝐓𝐈 𝐒𝐄𝐆𝐑𝐄𝐓𝐈 (𝐏𝐑𝐎):*
 `.trimStart(),
-  header: '┍━━━〔 %category 〕━━━┑',
-  body: '┇ 👑  *%cmd*',
-  footer: '┕━━━━━──ׄ──ׅ──ׄ──━━━━━┙\n',
-  after: `_ʙʟᴅ-ʙᴏᴛ ᴇxᴄʟᴜsɪᴠᴇ sʏsᴛᴇᴍ_`
+  header: '╭─── [ %category ] ───✨',
+  body: '│  👑  *%cmd*',
+  footer: '╰───────────────────── 🍪\n',
+  after: `_✨ Ricette esclusive sfornate con amore da BLOOD ✨_`
 }
 
 let handler = async (m, { conn, usedPrefix: _p }) => {
   let tags = {
-    'prem': 'ᴇʟɪᴛᴇ ᴘʀᴏᴛᴏᴄᴏʟ'
+    'prem': 'INGREDIENTI PREMIUM'
   }
 
   try {
     await conn.sendPresenceUpdate('composing', m.chat)
-    
+
     let user = global.db.data.users[m.sender] || {}
     let { level = 0, role = 'User' } = user
     let name = await conn.getName(m.sender)
     let _uptime = process.uptime() * 1000
     let uptime = clockString(_uptime)
 
-    // Filtraggio plugin premium
+    // Filtraggio plugin premium (Invariato)
     let help = Object.values(global.plugins).filter(p => !p.disabled && p.tags && (p.tags.includes('premium') || p.tags.includes('prem') || p.tags.includes('premio'))).map(p => ({
       help: Array.isArray(p.help) ? p.help : [p.help],
       prefix: 'customPrefix' in p,
@@ -63,22 +61,21 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     await m.react('⭐')
 
-    // --- INVIO COME IMMAGINE (SOSTITUITO VIDEO) ---
+    // --- INVIO SOLO TESTO (IMMAGINE RIMOSSA) ---
     await conn.sendMessage(m.chat, {
-      image: { url: localImg },
-      caption: text.trim(),
+      text: text.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363232743845068@newsletter',
-          newsletterName: "✧ 𝙱𝙻𝙳-𝙱𝙾𝚃 𝙿𝚁𝙴𝙼𝙸𝚄𝙼 ✧"
+          newsletterName: "🍪 𝐏𝐀𝐍𝐃𝐈𝐒𝐓𝐄𝐋𝐋𝐄 - 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 ⭐"
         }
       }
     }, { quoted: m })
 
   } catch (e) {
     console.error(e)
-    conn.reply(m.chat, '❌ Errore nel caricamento del modulo Premium. Verifica menu-premium.jpeg.', m)
+    conn.reply(m.chat, `❌ Errore nel modulo premium dell'impasto: ${e.message}`, m)
   }
 }
 
