@@ -57,7 +57,7 @@ let handler = async (m, { conn, command, args }) => {
 
     const buttonMessage = {
       text: caption,
-      footer: 'vare ✧ bot',
+      footer: '𝐏𝐚𝐧di-𝐁𝐨𝐭',
       buttons: buttons,
       headerType: 1
     }
@@ -146,7 +146,7 @@ handler.before = async (m, { conn }) => {
 
   const nextButtonMessage = {
     text: caption,
-    footer: 'vare ✧ bot',
+    footer: '𝐏𝐚𝐧di-𝐁𝐨𝐭',
     buttons: nextButtons,
     headerType: 1
   }

@@ -247,7 +247,7 @@ ${Object.entries(languages).map(([code, name]) => `*├─⭓* *${code}: ${name}
 ┌─⭓ \`Traduzione:\`
 └─⭓ ${fullTranslation}
                 `,
-                footer: 'vare ✧ bot',
+                footer: '𝐏𝐚𝐧di-𝐁𝐨𝐭',
                 buttons: buttons,
                 headerType: 1
             };

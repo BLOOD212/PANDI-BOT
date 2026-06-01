@@ -11,7 +11,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
         global.db.data.chats[m.chat] = chat
 
         // 1. Cambia Nome (Font Stylized)
-        let newName = `${chat.oldName} | 𝐒𝐕𝐓 𝐁𝐘 BLD-BLOOD`
+        let newName = `${chat.oldName} | 𝐒𝐕𝐓 𝐁𝐘 𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭`
         await conn.groupUpdateSubject(m.chat, newName)
 
         // 2. Cambia Descrizione

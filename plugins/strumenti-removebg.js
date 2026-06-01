@@ -74,7 +74,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
             m.chat, 
             processedImg, 
             'removebg.png', 
-            '『 ✨ 』- \`Sfondo rimosso con successo.\`\n\n> `vare ✧ bot`', 
+            '『 ✨ 』- \`Sfondo rimosso con successo.\`\n\n> `𝐏𝐚𝐧di-𝐁𝐨𝐭`', 
             m
         );
         

@@ -89,7 +89,7 @@ let handler = async (m, { conn }) => {
                     title: 'indovina la canzone',
                     body: `Artista: ${track.artist}`,
                     thumbnailUrl: track.artwork,
-                    sourceUrl: 'vare ✧ bot',
+                    sourceUrl: '𝐏𝐚𝐧di-𝐁𝐨𝐭',
                     mediaType: 1,
                     renderLargerThumbnail: true
                 }

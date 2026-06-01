@@ -83,7 +83,7 @@ ${d.l} • \`Tab Playlist:\` ${profileTab.showPlayListTab ? '📋 Si' : '❌ No'
 ${d.l} • \`Playlist Espanse:\` ${user.canExpPlaylist ? '✅ Si' : '❌ No'}
 ${d.f}
 
-> vare ✧ bot`
+> 𝐏𝐚𝐧di-𝐁𝐨𝐭`
         if (profilePic) {
             try {
                 await conn.sendFile(m.chat, profilePic, 'profile.jpg', teks, m)

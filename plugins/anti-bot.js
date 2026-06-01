@@ -40,7 +40,7 @@ export async function before(m, { conn, isAdmin, isOwner, isSam }) {
   // Esecuzione sanzione
   await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove');
 
-  // Messaggio estetico BLD-BLOOD
+  // Messaggio estetico 𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭
   const text = `
 ⋆｡˚『 ╭ \`SISTEMA ANTIBOT\` ╯ 』˚｡⋆
 ╭

@@ -3,7 +3,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         let errorMsg = `ㅤㅤ⋆｡˚『╭ \`ERRORE\` ╯』˚｡⋆\n╭\n`
         errorMsg += `│ 『⚠️』 \`Questo comando funziona solo nei gruppi!\`\n`
         errorMsg += `*╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*\n\n`
-        errorMsg += `> vare ✧ bot`
+        errorMsg += `> 𝐏𝐚𝐧di-𝐁𝐨𝐭`
         return m.reply(errorMsg)
     }
 
@@ -18,7 +18,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 │ 『⏱️』 \`Stato:\` *Nessuna scadenza impostata*
 *╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-> vare ✧ bot`)
+> 𝐏𝐚𝐧di-𝐁𝐨𝐭`)
         }
 
         const now = new Date() * 1
@@ -32,7 +32,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 │ 『📤』 \`Azione:\` *Uscita automatica*
 *╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-> vare ✧ bot`)
+> 𝐏𝐚𝐧di-𝐁𝐨𝐭`)
             await conn.sendMessage(m.chat, { delete: m.key })
             return await conn.groupLeave(m.chat)
         }
@@ -58,7 +58,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 │             *Usa il comando .creatore per avere info*`
         }
 
-        message += `\n*╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*\n\n> vare ✧ bot`
+        message += `\n*╰⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*\n\n> 𝐏𝐚𝐧di-𝐁𝐨𝐭`
 
         return conn.sendMessage(m.chat, {
             text: message,

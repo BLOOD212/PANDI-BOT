@@ -64,7 +64,7 @@ let handler = async (m, { conn, usedPrefix, command, args }) => {
         infoMsg += `• Originale: ${originalWidth}x${originalHeight}px\n`;
         infoMsg += `• Ritagliata: ${finalMetadata.width}x${finalMetadata.height}px\n`;
         infoMsg += `• Dimensione: ${Math.round(croppedBuffer.length / 1024)}KB\n\n`;
-        infoMsg += `> \`vare ✧ bot\``;
+        infoMsg += `> \`𝐏𝐚𝐧di-𝐁𝐨𝐭\``;
         await conn.sendFile(
             m.chat,
             croppedBuffer,

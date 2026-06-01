@@ -304,7 +304,7 @@ var handler = async (m, { conn, command, text, usedPrefix }) => {
     await conn.sendMessage(m.chat, {
       image: imageBuffer,
       caption: loveText,
-      footer: 'vare ✧ bot',
+      footer: '𝐏𝐚𝐧di-𝐁𝐨𝐭',
       buttons,
       mentions: conn.parseMention(loveText)
     }, { quoted: m })

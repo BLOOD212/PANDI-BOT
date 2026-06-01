@@ -63,7 +63,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
             }
           });
 
-          const caption = i === 0 ? `『 🔍 』 Ricerca: ${text}\n> \`vare ✧ bot\`` : `『 🌐 』 Sito Origine: ${contextLink}`;
+          const caption = i === 0 ? `『 🔍 』 Ricerca: ${text}\n> \`𝐏𝐚𝐧di-𝐁𝐨𝐭\`` : `『 🌐 』 Sito Origine: ${contextLink}`;
 
           albumItems.push({
             image: Buffer.from(thumbResponse.data),

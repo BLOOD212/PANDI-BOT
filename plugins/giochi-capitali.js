@@ -158,7 +158,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
             timeout: setTimeout(async () => {
                 if (global.capitaliGame?.[m.chat]) {
                     await conn.sendMessage(m.chat, {
-                        text: `⏳ *Tempo scaduto!*\n\n🏛️ *La capitale di ${scelta.paese} è:* *${scelta.capitale}*\n\n> \`𝖇𝖑𝖔𝖔𝖉𝖇𝖔𝖙\``,
+                        text: `⏳ *Tempo scaduto!*\n\n🏛️ *La capitale di ${scelta.paese} è:* *${scelta.capitale}*\n\n> \`𝐏𝐚𝐧𝐝𝐢-𝐁𝐨𝐭\``,
                         buttons: playAgainButtons(usedPrefix),
                         headerType: 1
                     }, { quoted: msg });

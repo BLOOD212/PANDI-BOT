@@ -113,7 +113,7 @@ async function handler(m, { conn, usedPrefix, command, args }) {
       return await conn.sendMessage(m.chat, {
         title: '🔐 Generatore Password',
         text: `\n➤ \`la tua password:\`\n     *\`${pass}\`*\n`,
-        footer: `vare ✧ bot`,
+        footer: `𝐏𝐚𝐧di-𝐁𝐨𝐭`,
         interactiveButtons: [
           {
             name: 'quick_reply',
