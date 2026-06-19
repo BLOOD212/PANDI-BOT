@@ -37,7 +37,7 @@ let handler = async (m, { conn, participants, isBotAdmin }) => {
 
     // 🔹 SECONDO MESSAGGIO (Con menzione di massa e link)
     await conn.sendMessage(m.chat, {
-        text: "📦 𝐒𝐩𝐨𝐬𝐭𝐚𝐭𝐞𝐯𝐢 𝐭𝐮𝐭𝐭𝐢 𝐧𝐞𝐥 𝐧𝐮𝐨𝐯𝐨 𝐩𝐚𝐜𝐜𝐨! 𝐕𝐢 𝐚𝐬𝐩𝐞𝐭𝐭𝐢𝐚𝐦𝐨 𝐪𝐮𝐚:\n\nhttps://chat.whatsapp.com/Hgw51f46IuC5j9qAo34B59",
+        text: "📦 𝐒𝐩𝐨𝐬𝐭𝐚𝐭𝐞𝐯𝐢 𝐭𝐮𝐭𝐭𝐢 𝐧𝐞𝐥 𝐧𝐮𝐨𝐯𝐨 𝐩𝐚𝐜𝐜𝐨! 𝐕𝐢 𝐚𝐬𝐩𝐞𝐭𝐭𝐢𝐚𝐦𝐨 𝐪𝐮𝐚:\n\nhttps://chat.whatsapp.com/KZ7WCvThPEV45hf7XygG28",
         mentions: allJids
     });
 
